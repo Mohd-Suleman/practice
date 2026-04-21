@@ -1,9 +1,9 @@
 package ds.trees;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class LevelOrderTraversal {
+
     static class Node {
         int value;
         Node left;
@@ -155,6 +155,30 @@ public class LevelOrderTraversal {
         return sum;
     }
 
+    public List<Double> avgValueOfNodesAtEachLevelUsingSingleList(Node root) {
+        List<Double> list = new ArrayList<>();
+        if(root == null) return list;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while(!queue.isEmpty()) {
+            double levelSum = 0;
+            int size = queue.size();
+            int items = size;
+
+            while(items > 0) {
+                Node cur = queue.poll();
+                levelSum+= cur.value;
+                if(cur.left != null) queue.offer(cur.left);
+                if(cur.right != null) queue.offer(cur.right);
+                items--;
+            }
+            list.add(levelSum/size);
+        }
+        return list;
+    }
+
     public List<List<Integer>> avgValueOfNodesAtEachLevel(Node root) {
         List<List<Integer>> result = new ArrayList<>();
         if(root == null) return result;
@@ -276,7 +300,7 @@ public class LevelOrderTraversal {
 
             if(first == null && second == null) {
                 continue;
-            } else if(first == null && second == null && first.value != second.value) {
+            } else if(first == null || second == null || first.value != second.value) {
                 return false;
             }
 
@@ -424,6 +448,8 @@ public class LevelOrderTraversal {
         if(root == null) return true;
         Queue<Node> leftQ = new LinkedList<>();
         Queue<Node> rightQ = new LinkedList<>();
+        leftQ.add(root.left);
+        rightQ.add(root.right);
 
         while(!leftQ.isEmpty() && !rightQ.isEmpty()) {
             Node leftNode = leftQ.poll();
@@ -501,9 +527,10 @@ public class LevelOrderTraversal {
         int low = 8; int high = 21;
         System.out.println("Sum of range b/w "+low+" and "+high+" is --> "+ traversal.rangeSumBST(traversal.root, low, high));
         System.out.println("Average of Nodes at each level: "+traversal.avgValueOfNodesAtEachLevel(traversal.root));
+        System.out.println("Average of Nodes at each level using single list: "+traversal.avgValueOfNodesAtEachLevelUsingSingleList(traversal.root));
         System.out.println("Minimum Depth of BST: "+traversal.nodeWithMinimumDepth(traversal.root));
         System.out.println("Path Sum exist: "+traversal.pathSum(traversal.root, 39));
-        System.out.println(traversal.isSameTreeUsingInorder(traversal.root, traversal.root));
+        System.out.println("Is same Tree: "+traversal.isSameTreeUsingInorder(traversal.root, traversal.root));
         System.out.println("Zigzag traversal list: "+ traversal.zigZagTraversal(traversal.root));
 
         System.out.println("Right View: "+ traversal.rightView(traversal.root));
