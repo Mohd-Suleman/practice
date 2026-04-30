@@ -1,11 +1,7 @@
 package leetcode150.graph;
 
-import ds.graph.GraphUsingList;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GraphUsingAdjList {
 
@@ -49,6 +45,44 @@ public class GraphUsingAdjList {
         }
     }
 
+    public void iterativeDFS(int vertex) {
+        Set<Integer> set = new HashSet<>();
+        Stack<Integer> stack = new Stack<>();
+        stack.push(vertex);
+
+        while (!stack.isEmpty()) {
+            int cur = stack.pop();
+            System.out.print(cur+" ");
+            set.add(cur);
+
+            for(int neighbor: adjList.getOrDefault(cur, Collections.emptyList())) {
+                if(!set.contains(neighbor))
+                    stack.push(neighbor);
+            }
+        }
+        System.out.println();
+    }
+
+    public void iterativeBFS(int vertex) {
+        Set<Integer> set = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.offer(vertex);
+
+        while (!queue.isEmpty()) {
+            int cur = queue.poll();
+
+            System.out.print(cur+" ");
+            set.add(cur);
+
+            for(int neighbor: adjList.getOrDefault(cur, Collections.emptyList())) {
+                if(!set.contains(neighbor))
+                    queue.offer(neighbor);
+            }
+        }
+        System.out.println();
+    }
+
     public void printGraph() {
         System.out.println(adjList);
     }
@@ -70,6 +104,12 @@ public class GraphUsingAdjList {
 
         graph.printGraph();
 
+        System.out.println("Iterative DFS");
+        graph.iterativeDFS(1);
+        System.out.println("Iterative BFS");
+        graph.iterativeBFS(1);
+
+
         System.out.println("**** Removed Edge ******");
         graph.removeEdge(5, 3);
         graph.printGraph();
@@ -77,10 +117,5 @@ public class GraphUsingAdjList {
         System.out.println("**** Removed Vertex ******");
         graph.removeVertex(4);
         graph.printGraph();
-
-
-
     }
-
-
 }
