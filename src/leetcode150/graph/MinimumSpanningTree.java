@@ -57,6 +57,8 @@ public class MinimumSpanningTree {
 
     }
 
+    // [Edge{source=1, destination=2, weight=1}, Edge{source=0, destination=2, weight=4}, Edge{source=4, destination=2, weight=7}, Edge{source=3, destination=1, weight=8}]
+    // [Edge{source=0, destination=2, weight=4}, Edge{source=2, destination=1, weight=1}, Edge{source=2, destination=4, weight=7}, Edge{source=1, destination=3, weight=8}]
     public void printGraph() {
         for(int i=0; i<adjList.length; i++) {
             System.out.println("Node " +adjList[i]);
@@ -78,6 +80,10 @@ public class MinimumSpanningTree {
         System.out.println(graph.minimumSpanningTree(graph));
     }
 
+
+    // MSTT Usingg Prism Algo
+    // Explanation: https://www.youtube.com/watch?v=y40TOm0Hnys&list=PLFdAYMIVJQHNFJQt2eWA9Sx3R5eF32WPn&index=9
+    // Greedy for minimum vertices
     public List<Edge> minimumSpanningTree(MinimumSpanningTree graph) {
         List<Edge>[] vertices = graph.adjList;
 
